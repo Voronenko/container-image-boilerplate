@@ -1,0 +1,36 @@
+version: "2"
+settings:
+  conductor_base: ubuntu:16.04
+  volumes:
+   - temp-space:/tmp   # Used to copy static content between containers
+
+services:
+
+   tini-runit:
+     from: ubuntu:16.04
+     container_name: api
+     roles:
+       - {
+           role: "softasap.sa-container-bootstrap",
+           container_init: "tini-init"
+         }
+       - {
+           role: "softasap.sa-nginx-container",
+           container_init: "tini-init" # optionally uses runit for services management and upstart.
+         }
+       - {
+           role: "../custom-roles/app-nginx-stub-deploy",
+           container_init: "tini-init"
+         }
+     expose:
+       - '8000'
+       - '22'
+     volumes:
+        - temp-space:/tmp   # Used to copy static content between containers
+     environment:
+        IN_DOCKER: "1"         
+
+volumes:
+  temp-space:
+    docker: {}
+

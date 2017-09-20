@@ -1,0 +1,9 @@
+---
+version: '3.1'
+services:
+  nginx:
+    image: container-image-boilerplate-tini-runit:latest
+    ports:
+    - 8000:8000
+    - 2222:2222
+    command: ['/docker-entrypoint']

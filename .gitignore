@@ -1,0 +1,6 @@
+roles/*
+ansible-deployment/*
+p-env/*
+deployables/*
+*.retry
+
